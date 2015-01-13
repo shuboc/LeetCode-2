@@ -29,9 +29,9 @@
 
 # Write your MySQL query statement below
 SELECT Ranks.Score, Ranks.Rank FROM Scores LEFT JOIN 
-       ( SELECT l.Score, @curRow := @curRow + 1  Rank 
-              FROM (SELECT DISTINCT(Score) FROM Scores ORDER by Score DESC) l 
-              JOIN (SELECT @curRow := 0) r
+       ( SELECT r.Score, @curRow := @curRow + 1  Rank 
+            FROM (SELECT DISTINCT(Score), (SELECT @curRow := 0) 
+                      FROM Scores ORDER by Score DESC) r
        ) Ranks 
        ON Scores.Score = Ranks.Score
        ORDER by Score DESC
