@@ -48,7 +48,7 @@
 #
 select 
 t.Request_at Day, 
-round(sum(case when t.Status like 'cancelled_%' then 1 else 0 end) / count(*), 2) Rate
+round(sum(case when t.Status = 'completed' then 0 else 1 end) / count(*), 2) Rate
 from Trips t
 inner join Users u 
 on t.Client_Id = u.Users_Id and u.Banned='No'
