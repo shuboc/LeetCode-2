@@ -19,7 +19,7 @@
 
 # Solution 1
 # Write your MySQL query statement below
-SELECT  DISTINCT(Num) AS ConsecutiveNums
+SELECT DISTINCT(Num) AS ConsecutiveNums
 FROM (
     SELECT
     Num,
