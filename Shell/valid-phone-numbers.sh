@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Time:  O(n)
 # Space: O(1)
 #
