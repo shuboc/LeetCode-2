@@ -1,5 +1,5 @@
-# Time:  O((25n)^n)
-# Space: O((25n)^n)
+# Time:  O(n * d), n is length of string, d is size of dictionary
+# Space: O(d)
 #
 # Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
 # 
@@ -37,7 +37,7 @@ class Solution:
             for word in cur:
                 visited.add(word)
                 
-            next = set([])
+            next = set()
             for word in cur:
                 for i in xrange(len(word)):
                     for j in 'abcdefghijklmnopqrstuvwxyz':
@@ -55,7 +55,7 @@ class Solution:
         return result
     
     def backtrack(self, result, trace, path, word):
-        if len(trace[word]) == 0:
+        if not trace[word]:
             result.append([word] + path)
         else:
             for prev in trace[word]:

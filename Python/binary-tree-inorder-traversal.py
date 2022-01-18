@@ -22,55 +22,57 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 # Morris Traversal Solution
-class Solution:
-    # @param root, a tree node
-    # @return a list of integers
+class Solution(object):
     def inorderTraversal(self, root):
-        result, prev, cur = [], None, root
-        while cur:
-            if cur.left is None:
-                result.append(cur.val)
-                prev = cur
-                cur = cur.right
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        result, curr = [], root
+        while curr:
+            if curr.left is None:
+                result.append(curr.val)
+                curr = curr.right
             else:
-                node = cur.left
-                while node.right and node.right != cur:
+                node = curr.left
+                while node.right and node.right != curr:
                     node = node.right
             
                 if node.right is None:
-                    node.right = cur
-                    cur = cur.left
+                    node.right = curr
+                    curr = curr.left
                 else:
-                    result.append(cur.val)
+                    result.append(curr.val)
                     node.right = None
-                    prev = cur
-                    cur = cur.right
+                    curr = curr.right
                 
         return result
 
+
 # Time:  O(n)
-# Space: O(n)
-# Stack Solution  
-class Solution2:
-    # @param root, a tree node
-    # @return a list of integers
+# Space: O(h)
+# Stack Solution
+class Solution2(object):
     def inorderTraversal(self, root):
-        result, stack, current, last_traversed = [], [], root, None
-        while stack or current:
-            if current:
-                stack.append(current)
-                current = current.left
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        result, stack = [], [(root, False)]
+        while stack:
+            root, is_visited = stack.pop()
+            if root is None:
+                continue
+            if is_visited:
+                result.append(root.val)
             else:
-                parent = stack[-1]
-                if parent.right in (None, last_traversed):
-                    if parent.right is None:
-                        result.append(parent.val)
-                    last_traversed= stack.pop()
-                else:
-                    result.append(parent.val)
-                    current = parent.right
+                stack.append((root.right, False))
+                stack.append((root, True))
+                stack.append((root.left, False))
         return result
+
 
 if __name__ == "__main__":
     root = TreeNode(1)

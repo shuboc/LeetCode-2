@@ -1,5 +1,5 @@
-# Time:  O(n! / m!(n-m)!)
-# Space: O(m)
+# Time:  O(k * C(n, k))
+# Space: O(k)
 # 
 # Given a collection of candidate numbers (C) and a target number (T), 
 # find all unique combinations in C where the candidate numbers sums to T.
@@ -29,11 +29,13 @@ class Solution:
     
     def combinationSumRecu(self, candidates, result, start, intermediate, target):
         if target == 0:
-            result.append(intermediate)
+            result.append(list(intermediate))
         prev = 0
         while start < len(candidates) and candidates[start] <= target:
             if prev != candidates[start]:
-                self.combinationSumRecu(candidates, result, start + 1, intermediate + [candidates[start]], target - candidates[start])
+                intermediate.append(candidates[start])
+                self.combinationSumRecu(candidates, result, start + 1, intermediate, target - candidates[start])
+                intermediate.pop()
                 prev = candidates[start]
             start += 1
 

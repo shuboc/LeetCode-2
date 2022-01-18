@@ -12,26 +12,51 @@
 # return [3, 4].
 #
 
-class Solution:
-    # @param A, a list of integers
-    # @param target, an integer to be searched
-    # @return a list of length 2, [index1, index2]
-    def searchRange(self, A, target):
-        left = self.binarySearch(lambda x, y: x > y, A, target)
-        if left >= len(A) or A[left] != target:
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # Find the first index where target <= nums[idx]
+        left = self.binarySearch(lambda x, y: x >= y, nums, target)
+        if left >= len(nums) or nums[left] != target:
             return [-1, -1]
-        right = self.binarySearch(lambda x, y: x >= y, A, target)
+        # Find the first index where target < nums[idx]
+        right = self.binarySearch(lambda x, y: x > y, nums, target)
         return [left, right - 1]
     
-    def binarySearch(self, compare, A, target):
-        start, end = 0, len(A)
-        while start < end:
-            mid = start + (end - start) / 2
-            if compare(target, A[mid]):
-                start = mid + 1
+    def binarySearch(self, compare, nums, target):
+        left, right = 0, len(nums)
+        while left < right:
+            mid = left + (right - left) / 2
+            if compare(nums[mid], target):
+                right = mid
             else:
-                end = mid
-        return start
+                left = mid + 1
+        return left
+
+    def binarySearch2(self, compare, nums, target):
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = left + (right - left) / 2
+            if compare(nums[mid], target):
+                right = mid - 1
+            else:
+                left = mid + 1
+        return left
+
+    def binarySearch3(self, compare, nums, target):
+        left, right = -1, len(nums)
+        while left + 1 < right:
+            mid = left + (right - left) / 2
+            if compare(nums[mid], target):
+                right = mid
+            else:
+                left = mid
+        return right
+
 
 if __name__ == "__main__":
     print Solution().searchRange([2, 2], 3)

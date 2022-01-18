@@ -1,5 +1,5 @@
-# Time:  O(n^2)
-# Space: O(n)
+# Time:  O(n * 2^n)
+# Space: O(2^n)
 #
 # The count-and-say sequence is the sequence of integers beginning as follows:
 # 1, 11, 21, 1211, 111221, ...
@@ -27,7 +27,7 @@ class Solution:
             while i < len(seq) - 1 and seq[i] == seq[i + 1]:
                 cnt += 1
                 i += 1
-            next_seq += "{}{}".format(cnt, seq[i])
+            next_seq += str(cnt) + seq[i]
             i += 1
         return next_seq
 
