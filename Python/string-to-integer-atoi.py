@@ -41,9 +41,9 @@ class Solution:
             i += 1
         
         sign = 1
-        if str[i] == "+":
+        if i < len(str) and str[i] == "+":
             i += 1
-        elif str[i] == "-":
+        elif i < len(str) and str[i] == "-":
             sign = -1
             i += 1
 
@@ -60,9 +60,9 @@ class Solution:
         return sign * result
 
 if __name__ == "__main__":
-    print Solution().atoi("") 
-    print Solution().atoi("-1")
-    print Solution().atoi("2147483647") 
-    print Solution().atoi("2147483648") 
-    print Solution().atoi("-2147483648")  
-    print Solution().atoi("-2147483649")  
+    print( Solution().atoi("") )
+    print( Solution().atoi("-1") )
+    print( Solution().atoi("2147483647") )
+    print( Solution().atoi("2147483648") ) 
+    print( Solution().atoi("-2147483648") )  
+    print( Solution().atoi("-2147483649") ) 
