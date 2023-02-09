@@ -1,5 +1,5 @@
-# Time:  O(n + m)
-# Space: O(m)
+# Time:  O(n + k)
+# Space: O(k)
 #
 # Implement strStr().
 # 
@@ -9,22 +9,17 @@
 
 # Wiki of KMP algorithm:
 # http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
-class Solution:
-    # @param haystack, a string
-    # @param needle, a string
-    # @return a string or None
+class Solution(object):
     def strStr(self, haystack, needle):
-        if len(haystack) < len(needle):
-            return None
-        
-        if len(needle) == 0:
-            return haystack
-        
-        i = self.KMP(haystack, needle)
-        if i > -1:
-            return haystack[i:]
-        else:
-            return None
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if not needle:
+            return 0
+            
+        return self.KMP(haystack, needle)
     
     def KMP(self, text, pattern):
         prefix = self.getPrefix(pattern)
@@ -40,7 +35,7 @@ class Solution:
     
     def getPrefix(self, pattern):
         prefix = [-1] * len(pattern)
-        j = - 1
+        j = -1
         for i in xrange(1, len(pattern)):
             while j > -1 and pattern[j + 1] != pattern[i]:
                 j = prefix[j]
@@ -48,18 +43,31 @@ class Solution:
                 j += 1
             prefix[i] = j
         return prefix
+
+    def strStr2(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        try:
+            return haystack.index(needle)
+        except:
+            return -1
     
-# Time:  (n * m)
-# Space: (1)
-class Solution2:
-    # @param haystack, a string
-    # @param needle, a string
-    # @return a string or None
+# Time:  O(n * k)
+# Space: O(k)
+class Solution2(object):
     def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
         for i in xrange(len(haystack) - len(needle) + 1):
             if haystack[i : i + len(needle)] == needle:
-                return haystack[i:]
-        return None
+                return i
+        return -1
     
 if __name__ == "__main__":
     print Solution().strStr("a", "")

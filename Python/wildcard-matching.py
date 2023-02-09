@@ -48,7 +48,9 @@ class Solution:
         
         return p_ptr == len(p)
     
-# dp
+# dp with rolling window
+# Time:  O(m * n)
+# Space: O(m + n)
 class Solution2:
     # @return a boolean
     def isMatch(self, s, p):
@@ -92,15 +94,15 @@ class Solution3:
         return result[len(s)][len(p)]
 
 
-# recursive, slowest
+# recursive, slowest, TLE
 class Solution4:
     # @return a boolean
     def isMatch(self, s, p):
-        if len(p) == 0:
-            return len(s) == 0
+        if not p or not s:
+            return not s and not p
         
         if p[0] != '*':
-            if len(s) == 0 or (p[0] == s[0] or p[0] == '?'):
+            if p[0] == s[0] or p[0] == '?':
                 return self.isMatch(s[1:], p[1:])
             else:
                 return False

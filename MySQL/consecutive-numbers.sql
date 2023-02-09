@@ -17,8 +17,9 @@
 # For example, given the above Logs table, 1 is the only number that appears consecutively for at least three times.
 #
 
+# Solution 1
 # Write your MySQL query statement below
-SELECT  DISTINCT(Num) AS ConsecutiveNums
+SELECT DISTINCT(Num) AS ConsecutiveNums
 FROM (
     SELECT
     Num,
@@ -27,3 +28,8 @@ FROM (
     FROM Logs y, (SELECT @counter:=1, @prev:=NULL) vars
 ) sq
 WHERE how_many_cnt_in_a_row >= 3
+
+# Solution 2
+SELECT DISTINCT l1.Num  as ConsecutiveNums
+FROM Logs l1, Logs l2, Logs l3  
+WHERE l1.Id + 1 = l2.Id AND l2.Id + 1 = l3.Id AND l1.Num = l2.Num AND l2.Num = l3.Num 

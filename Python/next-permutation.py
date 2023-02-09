@@ -14,8 +14,8 @@
 #
 
 class Solution:
-    # @param num, a list of integer
-    # @return a list of integer
+    # @param {integer[]} nums
+    # @return {void} Do not return anything, modify nums in-place instead.
     def nextPermutation(self, num):
         k, l = -1, 0
         for i in xrange(len(num) - 1):
@@ -23,20 +23,21 @@ class Solution:
                 k = i
                 
         if k == -1:
-            return num[::-1]
+            num.reverse()
+            return
         
-        for i in xrange(len(num)):
+        for i in xrange(k + 1, len(num)):
             if num[i] > num[k]:
                 l = i
                 
         num[k], num[l] = num[l], num[k]
-        return num[:k + 1] + num[:k:-1]
+        num[k + 1:] = num[:k:-1]
 
 if __name__ == "__main__":
     num = [1, 4, 3, 2]
-    num = Solution().nextPermutation(num)
+    Solution().nextPermutation(num)
     print num
-    num = Solution().nextPermutation(num)
+    Solution().nextPermutation(num)
     print num
-    num = Solution().nextPermutation(num)
+    Solution().nextPermutation(num)
     print num
